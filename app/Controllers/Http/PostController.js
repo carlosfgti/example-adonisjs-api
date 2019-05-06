@@ -29,8 +29,17 @@ class PostController {
         return post
     }
 
-    async show ({ params }) {
-        const post = await Post.findOrFail(params.id)
+    async show ({ params, response }) {
+        // const post = await Post.findOrFail(params.id)
+        const post = await Post
+                            .query()
+                            .with('category')
+                            .where({ id: params.id })
+                            .first()
+
+        if (!post) {
+            response.status(404).json({error: 'Post not found'})
+        }
 
         return post
     }
