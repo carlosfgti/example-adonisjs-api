@@ -2,7 +2,8 @@
 
 const Route = use('Route')
 
-Route.post('register', 'AuthController.register').as('auth.register')
+Route.post('/register', 'AuthController.register').as('auth.register')
+Route.post('/login', 'AuthController.login').as('auth.login')
 
 Route.get('/', () => {
   return { greeting: 'Hello world in JSON' }
