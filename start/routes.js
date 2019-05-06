@@ -17,4 +17,7 @@ Route.group(() => {
             ]))
       Route.resource('posts', 'PostController')
             .apiOnly()
+            .validator(new Map([
+                  [['posts.store', 'posts.update'], ['StoreUpdatePost']]
+            ]))
 }).middleware(['auth'])
