@@ -20,8 +20,16 @@ class CategoryController {
         return category
     }
 
-    async show ({ params }) {
-        const category = await Category.findOrFail(params.id)
+    async show ({ params, response }) {
+        const category = await Category
+                                    .query()
+                                    .with('posts')
+                                    .where({ id: params.id })
+                                    .first()
+        
+        if (!category) {
+            response.status(404).json({error: 'Category not found'})
+        }
 
         return category
     }
