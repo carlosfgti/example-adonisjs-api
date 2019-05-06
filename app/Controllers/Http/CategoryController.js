@@ -10,6 +10,15 @@ class CategoryController {
         return categories
     }
 
+    async store ({ request }) {
+        const data = request.only(['title', 'description'])
+        data.flag = data.title
+
+        const category = await Category.create(data)
+
+        return category
+    }
+
 }
 
 module.exports = CategoryController
