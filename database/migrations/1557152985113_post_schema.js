@@ -7,6 +7,17 @@ class PostSchema extends Schema {
   up () {
     this.create('posts', (table) => {
       table.increments()
+      table
+        .integer("category_id")
+        .unsigned()
+        .notNullable()
+        .references("id")
+        .inTable("categories")
+        .onUpdate("CASCADE")
+        .onDelete("CASCADE")
+      table.string('title', 150).notNullable().unique()
+      table.string('flag', 150).notNullable().unique()
+      table.text('body').notNullable()
       table.timestamps()
     })
   }
