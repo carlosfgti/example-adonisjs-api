@@ -1,6 +1,7 @@
 'use strict'
 
 const Post = use('App/Models/Post')
+const Category = use('App/Models/Category')
 const { createSlug } = use('App/Helpers/helpers')
 
 class PostController {
@@ -10,9 +11,15 @@ class PostController {
         return posts
     }
 
-    async store ({ request }) {
-        const data = request.only(['title', 'body', 'category_id'])
+    async store ({ request, response }) {
+        const data = request.only(['title', 'body'])
         data.flag = createSlug(data.title)
+
+        const category = await Category.find(request.input('category'))
+        if (!category) {
+            return response.status(404).json({error: 'Category not found'})
+        }
+        data.category_id = category.id
 
         const post = await Post.create(data)
 
@@ -25,10 +32,16 @@ class PostController {
         return post
     }
 
-    async update ({ params, request }) {
-        const data = request.only(['title', 'body', 'category_id'])
+    async update ({ params, request, response }) {
+        const data = request.only(['title', 'body'])
 
         if (data.title) data.flag = createSlug(data.title)
+
+        const category = await Category.find(request.input('category'))
+        if (!category) {
+            return response.status(404).json({error: 'Category not found'})
+        }
+        data.category_id = category.id
 
         const post = await Post.findOrFail(params.id)
         post.merge(data)
