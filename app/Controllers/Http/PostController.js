@@ -70,8 +70,12 @@ class PostController {
         return post
     }
 
-    async destroy ({ params }) {
+    async destroy ({ params, auth, response }) {
         const post = await Post.findOrFail(params.id)
+
+        if (post.user_id != auth.user.id) {
+            return response.status(401).json({error: 'Not authorized'})
+        }
 
         await post.delete()
     }
