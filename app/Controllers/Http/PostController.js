@@ -49,7 +49,7 @@ class PostController {
         return post
     }
 
-    async update ({ params, request, response }) {
+    async update ({ params, request, response, auth }) {
         const data = request.only(['title', 'body'])
 
         if (data.title) data.flag = createSlug(data.title)
@@ -58,10 +58,13 @@ class PostController {
         if (!category) {
             return response.status(404).json({error: 'Category not found'})
         }
-        data.category_id = category.id
 
         const post = await Post.findOrFail(params.id)
-        post.merge(data)
+        post.merge({
+            user_id: auth.user.id,
+            category_id: category.id,
+            ... data
+        })
         await post.save()
 
         return post
