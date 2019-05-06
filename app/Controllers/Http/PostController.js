@@ -35,6 +35,7 @@ class PostController {
         const post = await Post
                             .query()
                             .with('category')
+                            .with('author')
                             .where({ id: params.id })
                             .first()
 
