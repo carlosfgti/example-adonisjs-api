@@ -33,9 +33,15 @@ class CategoryController {
 
         const category = await Category.findOrFail(params.id)
         category.merge(data)
-        category.save()
+        await category.save()
 
         return category
+    }
+
+    async destroy ({ params }) {
+        const category = await Category.findOrFail(params.id)
+
+        await category.delete()
     }
 
 }
