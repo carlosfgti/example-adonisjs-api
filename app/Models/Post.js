@@ -9,6 +9,10 @@ class Post extends Model {
         return this.belongsTo('App/Models/Category')
     }
 
+    user () {
+        return this.belongsTo('App/Models/User')
+    }
+
 }
 
 module.exports = Post
