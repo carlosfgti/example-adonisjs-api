@@ -12,6 +12,9 @@ Route.get('/', () => {
 Route.group(() => {
       Route.resource('categories', 'CategoryController')
             .apiOnly()
+            .validator(new Map([
+                  [['categories.store', 'categories.update'], ['StoreUpdateCategory']]
+            ]))
       Route.resource('posts', 'PostController')
             .apiOnly()
 }).middleware(['auth'])
