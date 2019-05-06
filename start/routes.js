@@ -2,7 +2,9 @@
 
 const Route = use('Route')
 
-Route.post('/register', 'AuthController.register').as('auth.register')
+Route.post('/register', 'AuthController.register')
+      .as('auth.register')
+      .validator('StoreUser')
 Route.post('/login', 'AuthController.login').as('auth.login')
 
 Route.get('/', () => {
