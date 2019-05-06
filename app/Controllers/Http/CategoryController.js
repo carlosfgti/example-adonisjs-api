@@ -26,6 +26,18 @@ class CategoryController {
         return category
     }
 
+    async update ({ params, request }) {
+        const data = request.only(['title', 'description'])
+
+        if (data.title) data.flag = createSlug(data.title)
+
+        const category = await Category.findOrFail(params.id)
+        category.merge(data)
+        category.save()
+
+        return category
+    }
+
 }
 
 module.exports = CategoryController
