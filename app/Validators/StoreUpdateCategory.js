@@ -9,7 +9,6 @@ class StoreUpdateCategory {
     return {
       title: `required|min:3|max:150|unique:categories,title,id,${categoryId}`,
       description: 'min:3|max:255',
-      category: 'required'
     }
   }
 
