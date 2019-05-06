@@ -9,6 +9,7 @@ class PostController {
         const posts = await Post
                                 .query()
                                 .with('category')
+                                .with('author')
                                 .fetch()
 
         return posts

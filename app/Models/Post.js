@@ -9,7 +9,7 @@ class Post extends Model {
         return this.belongsTo('App/Models/Category')
     }
 
-    user () {
+    author () {
         return this.belongsTo('App/Models/User')
     }
 
