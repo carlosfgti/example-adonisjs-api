@@ -1,6 +1,7 @@
 'use strict'
 
 const Category = use('App/Models/Category')
+const { createSlug } = use('App/Helpers/helpers')
 
 class CategoryController {
 
@@ -12,7 +13,7 @@ class CategoryController {
 
     async store ({ request }) {
         const data = request.only(['title', 'description'])
-        data.flag = data.title
+        data.flag = createSlug(data.title)
 
         const category = await Category.create(data)
 
