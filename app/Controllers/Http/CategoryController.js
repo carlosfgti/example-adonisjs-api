@@ -20,6 +20,12 @@ class CategoryController {
         return category
     }
 
+    async show ({ params }) {
+        const category = await Category.findOrFail(params.id)
+
+        return category
+    }
+
 }
 
 module.exports = CategoryController
