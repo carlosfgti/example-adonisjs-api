@@ -9,3 +9,5 @@ Route.get('/', () => {
 
 Route.resource('categories', 'CategoryController')
       .apiOnly()
+Route.resource('posts', 'PostController')
+      .apiOnly()
