@@ -15,7 +15,7 @@ class PostController {
         return posts
     }
 
-    async store ({ request, response }) {
+    async store ({ request, response, auth }) {
         const data = request.only(['title', 'body'])
         data.flag = createSlug(data.title)
 
@@ -23,9 +23,12 @@ class PostController {
         if (!category) {
             return response.status(404).json({error: 'Category not found'})
         }
-        data.category_id = category.id
-
-        const post = await Post.create(data)
+        
+        const post = await Post.create({
+            user_id: auth.user.id,
+            category_id: category.id,
+            ... data
+        })
 
         return post
     }
