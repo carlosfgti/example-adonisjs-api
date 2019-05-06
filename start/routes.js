@@ -9,7 +9,9 @@ Route.get('/', () => {
   return { greeting: 'Hello world in JSON' }
 })
 
-Route.resource('categories', 'CategoryController')
-      .apiOnly()
-Route.resource('posts', 'PostController')
-      .apiOnly()
+Route.group(() => {
+      Route.resource('categories', 'CategoryController')
+            .apiOnly()
+      Route.resource('posts', 'PostController')
+            .apiOnly()
+}).middleware(['auth'])
