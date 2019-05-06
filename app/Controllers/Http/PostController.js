@@ -6,7 +6,10 @@ const { createSlug } = use('App/Helpers/helpers')
 
 class PostController {
     async index () {
-        const posts = await Post.all()
+        const posts = await Post
+                                .query()
+                                .with('category')
+                                .fetch()
 
         return posts
     }
